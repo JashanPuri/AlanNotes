@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import './constants.dart';
-import './models.dart';
-import './grid_item.dart';
+import '../constants.dart';
+import '../models/models.dart';
+import '../widgets/grid_item.dart';
 
 class DashBoard extends StatelessWidget {
   final dummyData = [

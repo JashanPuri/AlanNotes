@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import './dashboard.dart';
+import 'screens/dashboard.dart';
+import './auth/sign_up_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
         //primarySwatch: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: DashBoard(),
+      // home: DashBoard(),
+      home: SignUpScreen(),
     );
   }
 }
