@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './constants.dart';
+import 'package:intl/intl.dart';
 
 class GridItem extends StatelessWidget {
   final title;
@@ -11,12 +12,11 @@ class GridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
-      margin: EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           textWidget(text: title,color: white1),
-          textWidget(text: date.toString() ,color: white1)
+          textWidget(text: DateFormat("dd-MM-yyyy").format(date) ,color: white1)
       ]
       ),
       decoration: BoxDecoration(

@@ -1,5 +1,7 @@
+import 'package:alan_notes_app/constants.dart';
 import 'package:flutter/material.dart';
 import './dashboard.dart';
+import './edit_notes.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +18,9 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: DashBoard(),
+      routes: {
+        EditNotes.routeName: (context) => EditNotes()
+      },
     );
   }
 }
-
