@@ -5,26 +5,34 @@ import '../constants.dart';
 class CustomFlatButton extends StatelessWidget {
   final String titleText;
   final Function onTap;
+  final bool enabled;
 
-  CustomFlatButton({this.onTap, this.titleText});
+  CustomFlatButton({this.onTap, this.titleText, this.enabled = true});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      child: FlatButton(
-        minWidth: double.infinity,
-        height: 50,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
-        color: Colors.blue[800],
-        disabledColor: Colors.blue[800],
-        onPressed: onTap,
-        child: Text(
-          'Sign up',
-          style: TextStyle(
-            color: white1,
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
+      child: Center(
+        child: Opacity(
+          opacity: enabled ? 1 : 0.5,
+          child: FlatButton(
+            minWidth: 260,
+            height: 70,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50),
+            ),
+            color: secondaryThemeColor,
+            disabledColor: secondaryThemeColor,
+            onPressed: enabled ? onTap : null,
+            child: Text(
+              titleText,
+              style: TextStyle(
+                color: themeColor,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ),
       ),

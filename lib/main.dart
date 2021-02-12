@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/dashboard.dart';
 import './auth/sign_up_screen.dart';
+import './auth/login_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,8 +18,11 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       // home: DashBoard(),
-      home: SignUpScreen(),
+      home: LoginScreen(),
+      routes: {
+        SignUpScreen.routeName: (ctx) => SignUpScreen(),
+        LoginScreen.routeName: (ctx) => LoginScreen(),
+      },
     );
   }
 }
-

@@ -17,7 +17,7 @@ class AlternateAuthSelectorButton extends StatelessWidget {
         minWidth: double.infinity,
         padding: EdgeInsets.symmetric(vertical: 12),
         highlightColor: Colors.transparent,
-        onPressed: () {},
+        onPressed: onTap,
         child: RichText(
           text: TextSpan(
             children: [
@@ -31,7 +31,7 @@ class AlternateAuthSelectorButton extends StatelessWidget {
               TextSpan(
                 text: text2,
                 style: TextStyle(
-                  color: white1,
+                  color: secondaryThemeColor,
                   fontSize: 15,
                 ),
               ),

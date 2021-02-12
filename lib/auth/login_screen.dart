@@ -1,31 +1,25 @@
 import 'package:flutter/material.dart';
 
-import './login_screen.dart';
+import './sign_up_screen.dart';
 
 import '../constants.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/custom_flat_button.dart';
 import '../widgets/alternate_auth_selector_button.dart';
 
-class SignUpScreen extends StatefulWidget {
-
-  static const routeName = '/sign-up';
+class LoginScreen extends StatefulWidget {
+  static const routeName = '/login-screen';
 
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  String _username = '';
+class _LoginScreenState extends State<LoginScreen> {
   String _email = '';
   String _password = '';
-  String _confirmPassword = '';
 
   bool get isButtonEnabled {
-    return _username.isNotEmpty &&
-        _email.isNotEmpty &&
-        _password.isNotEmpty &&
-        _confirmPassword.isNotEmpty;
+    return _email.isNotEmpty && _password.isNotEmpty;
   }
 
   @override
@@ -43,7 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     SizedBox(height: 100),
                     Text(
-                      'Create Account,',
+                      'Log In,',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w600,
@@ -54,7 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     SizedBox(height: 7),
                     Text(
-                      'Sign up to get started!',
+                      'Please log in to continue!',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -65,14 +59,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     SizedBox(height: 40),
                     CustomTextField(
-                      hintText: 'Username',
-                      onChanged: (value) {
-                        setState(() {
-                          _username = value;
-                        });
-                      },
-                    ),
-                    CustomTextField(
                       hintText: 'Email ID',
                       onChanged: (value) {
                         setState(() {
@@ -82,31 +68,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     CustomTextField(
                       hintText: 'Password',
-                      obscureText: true,
                       onChanged: (value) {
                         setState(() {
                           _password = value;
                         });
                       },
-                    ),
-                    CustomTextField(
-                      hintText: 'Confirm password',
                       obscureText: true,
-                      onChanged: (value) {
-                        setState(() {
-                          _confirmPassword = value;
-                        });
-                      },
                     ),
                     CustomFlatButton(
-                      titleText: 'SIGNUP',
+                      titleText: 'LOGIN',
                       onTap: () {
-                        print(_username);
                         print(_email);
                         print(_password);
-                        print(_confirmPassword);
                       },
                       enabled: isButtonEnabled,
+                    ),
+                    Center(
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: 200,
+                          child: Text(
+                            'Forgot Password?',
+                            style: TextStyle(
+                              color: secondaryThemeColor,
+                              fontSize: 17,
+                            ),
+                          ),
+                        ),
+                        onTap: () {},
+                      ),
                     )
                   ],
                 ),
@@ -119,10 +112,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           AlternateAuthSelectorButton(
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+              Navigator.of(context).pushReplacementNamed(SignUpScreen.routeName);
             },
-            text1: "Already have an account? ",
-            text2: "Log In",
+            text1: "Don't have an account? ",
+            text2: "Sign Up",
           )
         ],
       ),
