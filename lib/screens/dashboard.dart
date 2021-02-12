@@ -1,31 +1,28 @@
-import 'package:alan_notes_app/edit_notes.dart';
+import 'package:alan_notes_app/providers/notes_provider.dart';
+
+import './edit_notes.dart';
 import 'package:flutter/material.dart';
-import './constants.dart';
-import './models.dart';
-import './grid_item.dart';
+import '../constants.dart';
+import '../models/models.dart';
+import '../widgets/grid_item.dart';
+import 'package:provider/provider.dart';
 
 class DashBoard extends StatelessWidget {
-  final dummyData = [
-    Note(
-        id: '1', title: 'Note 1', note: "This is note 1", date: DateTime.now()),
-    Note(
-        id: '2', title: 'Note 2', note: "This is note 2", date: DateTime.now()),
-    Note(
-        id: '3', title: 'Note 3', note: "This is note 3", date: DateTime.now()),
-    Note(
-        id: '4', title: 'Note 4', note: "This is note 4", date: DateTime.now()),
-    Note(id: '5', title: 'Note 5', note: "This is note 5", date: DateTime.now())
-  ];
+  static const routeName = '/dashboard';
   @override
   Widget build(BuildContext context) {
+    final data = Provider.of<NotesProvider>(context).notes;
     return Scaffold(
         backgroundColor: themeColor,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).pushNamed(EditNotes.routeName);
           },
-          child: Icon(Icons.add),
-          backgroundColor: accentColor,
+          child: Icon(
+            Icons.add,
+            color: themeColor,
+          ),
+          backgroundColor: secondaryThemeColor,
         ),
         appBar: AppBar(
           title: textWidget(
@@ -42,7 +39,7 @@ class DashBoard extends StatelessWidget {
               textWidget(
                   text: "Hello There !",
                   fontsize: 40.0,
-                  color: white1,
+                  color: secondaryThemeColor,
                   fontweight: FontWeight.bold),
               SizedBox(
                 height: 20,
@@ -53,12 +50,21 @@ class DashBoard extends StatelessWidget {
                     mainAxisSpacing: 20,
                     crossAxisSpacing: 20,
                     children: List.generate(
-                      dummyData.length,
+                      data.length,
                       (index) {
-                        return GridItem(
-                            date: dummyData[index].date,
-                            title: dummyData[index].title,
-                            note: dummyData[index].note);
+                        return InkWell(
+                          onTap: () {
+                            Navigator.of(context).pushNamed(EditNotes.routeName,
+                                arguments: {
+                                  'title': data[index].title,
+                                  'notes': data[index].note,
+                                  });
+                          },
+                          child: GridItem(
+                              date: data[index].date,
+                              title: data[index].title,
+                              note: data[index].note),
+                        );
                       },
                     )),
               ),
