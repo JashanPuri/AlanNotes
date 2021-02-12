@@ -34,17 +34,18 @@ class _EditNotesState extends State<EditNotes> {
           ),
         ],
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
         child: Column(
           children: [
             TextFormField(
-              initialValue:title == "" ? null : title,
+              initialValue: title == "" ? null : title,
               maxLines: 1,
               style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: medEmphasisTextColor),
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: medEmphasisTextColor,
+              ),
               decoration: InputDecoration(
                   hintText: title == "" ? "Title" : null,
                   border: InputBorder.none,
@@ -67,6 +68,8 @@ class _EditNotesState extends State<EditNotes> {
                   color: white1),
               decoration: InputDecoration(
                 border: InputBorder.none,
+                // fillColor: Colors.red,
+                // filled: true,
               ),
               onChanged: (value) {
                 setState(() {
