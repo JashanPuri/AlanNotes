@@ -23,7 +23,9 @@ class NotesProvider with ChangeNotifier {
     return [..._notes].toList();
   }
 
-  void updateNote({id, title, notes}) {}
+  void updateNote({id, title, notes}) {
+    
+  }
 
   notifyListeners();
 }
