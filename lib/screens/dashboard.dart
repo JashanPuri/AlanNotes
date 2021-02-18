@@ -14,27 +14,14 @@ class DashBoard extends StatelessWidget {
     final data = Provider.of<NotesProvider>(context).notes;
     return Scaffold(
         backgroundColor: themeColor,
-        floatingActionButton: OpenContainer(
-          closedColor: Colors.transparent,
-          openElevation:2,
-          transitionDuration: Duration(milliseconds: 700),
-          transitionType: ContainerTransitionType.fade,
-          useRootNavigator: true,
-          closedBuilder: (context, action) {
-            return FloatingActionButton(
-              onPressed: action,
+        floatingActionButton: FloatingActionButton(
+              onPressed: () {},
               child: Icon(
                 Icons.add,
                 color: themeColor,
               ),
               backgroundColor: secondaryThemeColor,
-            );
-          },
-          openBuilder: (context, action) {
-            return EditNotes();
-          },
-          tappable: true,
-        ),
+            ),
         appBar: AppBar(
           title: textWidget(
               text: "My Notes", fontsize: 22.0, fontweight: FontWeight.bold),
@@ -63,25 +50,22 @@ class DashBoard extends StatelessWidget {
                     children: List.generate(
                       data.length,
                       (index) {
-                        return InkWell(onTap: () {
-                          Navigator.of(context)
-                              .pushNamed(EditNotes.routeName, arguments: {
-                            'title': data[index].title,
-                            'notes': data[index].note,
-                          });
-                        }, child: OpenContainer(
+                        return OpenContainer(
+                          closedShape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                           closedBuilder: (_, action) {
                             return GridItem(
                                 date: data[index].date,
                                 title: data[index].title,
                                 note: data[index].note);
                           },
-                          closedColor: Colors.transparent,
+                          closedColor: accentColor,
                           transitionDuration: Duration(milliseconds: 600),
                           openBuilder: (context, action) {
-                              return EditNotes();
-                            },
-                        ));
+                            return EditNotes();
+                          },
+                        );
                       },
                     )),
               ),
