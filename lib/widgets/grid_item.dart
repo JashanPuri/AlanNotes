@@ -13,6 +13,7 @@ class GridItem extends StatelessWidget {
     //print("grid item called");
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+<<<<<<< HEAD
       child:
           Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         textWidget(
@@ -32,6 +33,28 @@ class GridItem extends StatelessWidget {
       ]),
       decoration: BoxDecoration(
           color: accentColor, borderRadius: BorderRadius.circular(20)),
+=======
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          textWidget(
+              text: title,
+              color: white1,
+              fontsize: 20.0,
+              fontweight: FontWeight.w700),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              child: textWidget(text: note, color: white1, fontsize: 16.0),
+            ),
+          ),
+          textWidget(
+              text: DateFormat("dd-MM-yyyy").format(date),
+              color: medEmphasisTextColor,
+              fontweight: FontWeight.w600)
+        ],
+      ),
+>>>>>>> bb8c373f032d77fd7ca0609b729f23485b073f23
     );
   }
 }

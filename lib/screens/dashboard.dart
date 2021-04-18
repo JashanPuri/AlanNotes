@@ -26,6 +26,7 @@ class _DashBoardState extends State<DashBoard> {
     //final data = Provider.of<NotesProvider>(context, listen: false).notes;
     //print("data is: $data");
     return Scaffold(
+<<<<<<< HEAD
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.of(context)
@@ -37,6 +38,17 @@ class _DashBoardState extends State<DashBoard> {
           ),
           backgroundColor: Theme.of(context).accentColor,
         ),
+=======
+        backgroundColor: themeColor,
+        floatingActionButton: FloatingActionButton(
+              onPressed: () {},
+              child: Icon(
+                Icons.add,
+                color: themeColor,
+              ),
+              backgroundColor: secondaryThemeColor,
+            ),
+>>>>>>> bb8c373f032d77fd7ca0609b729f23485b073f23
         appBar: AppBar(
           title: textWidget(
               text: "My Notes", fontsize: 22.0, fontweight: FontWeight.bold),
@@ -53,6 +65,7 @@ class _DashBoardState extends State<DashBoard> {
                 })
           ],
         ),
+<<<<<<< HEAD
         body: FutureBuilder(
           future: _refreshProducts(context),
           builder: (ctx, snapshot) => snapshot.connectionState ==
@@ -131,6 +144,50 @@ class _DashBoardState extends State<DashBoard> {
                     ),
                   ),
                 ),
+=======
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              textWidget(
+                  text: "Hello There !",
+                  fontsize: 40.0,
+                  color: secondaryThemeColor,
+                  fontweight: FontWeight.bold),
+              SizedBox(
+                height: 20,
+              ),
+              Flexible(
+                child: GridView.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 20,
+                    children: List.generate(
+                      data.length,
+                      (index) {
+                        return OpenContainer(
+                          closedShape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          closedBuilder: (_, action) {
+                            return GridItem(
+                                date: data[index].date,
+                                title: data[index].title,
+                                note: data[index].note);
+                          },
+                          closedColor: accentColor,
+                          transitionDuration: Duration(milliseconds: 600),
+                          openBuilder: (context, action) {
+                            return EditNotes();
+                          },
+                        );
+                      },
+                    )),
+              ),
+            ],
+          ),
+>>>>>>> bb8c373f032d77fd7ca0609b729f23485b073f23
         ));
   }
 }
