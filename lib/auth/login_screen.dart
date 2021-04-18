@@ -1,5 +1,8 @@
-import 'package:alan_notes_app/screens/dashboard.dart';
+import 'package:alan_notes_app/models/http_exception.dart';
+import 'package:alan_notes_app/providers/auth_provider.dart';
+//import 'package:alan_notes_app/screens/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import './sign_up_screen.dart';
 
@@ -18,9 +21,42 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   String _email = '';
   String _password = '';
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  bool _isLoading = false;
 
   bool get isButtonEnabled {
     return _email.isNotEmpty && _password.isNotEmpty;
+  }
+
+  Future<void> submit() async {
+    print("submit called");
+    if (_formKey.currentState.validate()) {
+      print("Not valid");
+      //return;
+    }
+    _formKey.currentState.save();
+    setState(() {
+      _isLoading = !_isLoading;
+    });
+    try {
+      await Provider.of<Auth>(context, listen: false).login(_email, _password);
+    } on HttpException catch (error) {
+      var errorMessage = 'Authentication Failed.';
+      if (error.toString().contains('EMAIL_EXIST')) {
+        errorMessage = 'This Email address is already in use.';
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'This is not a valid email address';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'This password is Invalid.';
+      }
+      showErrorDialog(errorMessage, context);
+    } finally {
+      if (mounted) { // checks if stateful widget is present or not
+        setState(() {
+          _isLoading = !_isLoading;
+        });
+      }
+    }
   }
 
   @override
@@ -33,6 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               child: Form(
+                key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -76,17 +113,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       obscureText: true,
                     ),
-                    SizedBox(height: 50,),
-                    CustomFlatButton(
-                      titleText: 'LOGIN',
-                      onTap: () {
-                        print(_email);
-                        print(_password);
-                        Navigator.of(context)
-                            .pushReplacementNamed(DashBoard.routeName);
-                      },
-                      enabled: isButtonEnabled,
+                    SizedBox(
+                      height: 50,
                     ),
+                    _isLoading
+                        ? Center(child: CircularProgressIndicator())
+                        : CustomFlatButton(
+                            titleText: 'LOGIN',
+                            onTap: submit,
+                            enabled: isButtonEnabled,
+                          ),
                     Center(
                       child: InkWell(
                         splashColor: Colors.transparent,
@@ -97,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text(
                             'Forgot Password?',
                             style: TextStyle(
-                              color: secondaryThemeColor,
+                              color: Theme.of(context).accentColor,
                               fontSize: 17,
                             ),
                           ),

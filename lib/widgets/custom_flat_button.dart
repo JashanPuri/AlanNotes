@@ -22,8 +22,8 @@ class CustomFlatButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
             ),
-            color: secondaryThemeColor,
-            disabledColor: secondaryThemeColor,
+            color: Theme.of(context).accentColor,
+            disabledColor: Theme.of(context).accentColor,
             onPressed: enabled ? onTap : null,
             child: Text(
               titleText,

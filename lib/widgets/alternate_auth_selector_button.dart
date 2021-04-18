@@ -31,7 +31,7 @@ class AlternateAuthSelectorButton extends StatelessWidget {
               TextSpan(
                 text: text2,
                 style: TextStyle(
-                  color: secondaryThemeColor,
+                  color: Theme.of(context).accentColor,
                   fontSize: 15,
                 ),
               ),

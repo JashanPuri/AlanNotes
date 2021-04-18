@@ -1,31 +1,75 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 import '../models/models.dart';
+import 'package:http/http.dart' as http;
 
 class NotesProvider with ChangeNotifier {
-  List<Note> _notes = [
-    Note(
-        id: '1',
-        title: 'Note 1',
-        note:
-            "This is note 1 jndfjndjfnvjmxvnmcxvbmnbmncnb,nc,jxnjvbxvbxnvbx,mcv,cxnv,jbvxb,mvncx,mvbcx,vbx,cbvcxnvbcxmbx",
-        date: DateTime.now()),
-    Note(
-        id: '2', title: 'Note 2', note: "This is note 2", date: DateTime.now()),
-    Note(
-        id: '3', title: 'Note 3', note: "This is note 3", date: DateTime.now()),
-    Note(
-        id: '4', title: 'Note 4', note: "This is note 4", date: DateTime.now()),
-    Note(id: '5', title: 'Note 5', note: "This is note 5", date: DateTime.now())
-  ];
+  List<Note> _notes = [];
 
   List<Note> get notes {
     return [..._notes].toList();
   }
 
-  void updateNote({id, title, notes}) {
-    
+  final String authToken;
+  final String userId;
+  NotesProvider({this.authToken, this.userId});
+
+  Future<void> createNote(Note note) async {
+    final url =
+        'https://notes-app-36b3b-default-rtdb.firebaseio.com/notes.json?auth=$authToken';
+    try {
+      //print('create called');
+      final response = await http.post(url,
+          body: json.encode({
+            'title': note.title,
+            'note': note.note,
+            'date': note.date.toString(),
+          }));
+      //print(response.body);
+      final newNote = Note(
+          date: note.date,
+          title: note.title,
+          note: note.note,
+          id: json.decode(response.body)['name']);
+      _notes.add(newNote);
+    } catch (error) {
+      print(error.toString());
+      throw error;
+    }
   }
+
+  Future<void> fetchAndSetNotes() async {
+    final url =
+        'https://notes-app-36b3b-default-rtdb.firebaseio.com/notes.json?auth=$authToken';
+    try {
+      //print("Called");
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      if (extractedData == null) {
+        return;
+      }
+      //print("here");
+      List<Note> loadedNotes = [];
+      extractedData.forEach((notesId, note) {
+        loadedNotes.add(Note(
+          id: notesId,
+          title: note["title"],
+          note: note["note"],
+          date: DateTime.parse(note["date"]),
+        ));
+      });
+      _notes = loadedNotes;
+    } catch (error) {
+      print(error);
+      throw error;
+    }
+    //print(_notes);
+    notifyListeners();
+  }
+
+  Future<void> updateNote({id, title, notes}) {}
 
   notifyListeners();
 }

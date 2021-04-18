@@ -6,11 +6,13 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final Function(String value) onChanged;
+  final Function(String value) validator;
 
   CustomTextField({
     this.hintText,
     this.obscureText = false,
     this.onChanged,
+    this.validator
   });
 
   @override
@@ -32,6 +34,7 @@ class CustomTextField extends StatelessWidget {
           isDense: true,
         ),
         onChanged: onChanged,
+        validator: validator,
       ),
     );
   }
